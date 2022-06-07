@@ -1,0 +1,16 @@
+
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+  }
+  
+  .rating > input{ display:none;}
+  
+  .rating > label {
+      font-size: 1.5vw;
+      color: #FFD600;
+      cursor: pointer;
+      margin-top: -5px;
+  }
