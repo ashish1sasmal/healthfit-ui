@@ -1,19 +1,21 @@
 import axios from "axios";
 
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useEffect, useRef, useState } from "react";
 import DoctorsCard from "./DoctorsCard";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { getAmptDetails, startConsult, updateAmptDetails } from "../utils/consultUtils";
 
 function Search() {
   const navigate = useNavigate();
   const { state = null } = useLocation();
-  const [apmtDetails, setApmtDetails] = useState(state || null);
+  const apmt_id = useRef(state?.apmt_id);
+  const apmt_details = useRef(null);
   const [cities, setCities] = useState([]);
   const [specs, setSpecs] = useState([]);
   const [isNear, setIsNear] = useState(false);
   const [coordinates, setCoordinates] = useState(null);
   const [docDetails, setDocDetails] = useState([]);
-  const [selectedDoc, setSelectedDoc] = useState(null);
+  const doc_id = useRef(null);
   const [filters, setFilters] = useState({
     available: false,
     city: null,
@@ -25,16 +27,65 @@ function Search() {
   const [currPage, setCurrPage] = useState(1);
 
   useEffect(() => {
-    console.log(apmtDetails, "hey");
-    if (apmtDetails && apmtDetails.doctor) {
-      navigate("/video");
+    if (apmt_id.current) {
+      getAmptDetails(apmt_id.current)
+      .then((resp) => {
+          const data = resp.data;
+          if (data.status === 1)
+              apmt_details.current = data.data;
+          else
+              navigate("/error", {state: {"message" : "Appointment not found."}})
+      })
     }
+
     axios.get("/doctor/search/").then((response) => {
       const data = response.data;
       setCities(data.cities);
       setSpecs(data.specs);
     });
   }, []);
+
+//   const displayRazorPay = () => {
+//     const options = {
+//     key: 'rzp_test_eCu1qUcpkGwpvc',
+//     currency: 'INR',
+//     amount: 50000,
+//     name: apmt_details.current.p_name,
+//     description: "Wallet Transaction",
+//     image: "",
+//     order_id: apmt_details.current.razorpay_order_id,
+//     handler: async function (resp) {
+//         console.log(resp);
+//         const data = {
+//             orderCreationId: resp._id,
+//             razorpayPaymentId: resp.razorpay_payment_id,
+//             razorpayOrderId: resp.razorpay_order_id,
+//             razorpaySignature: resp.razorpay_signature,
+//         };
+//         navigate("/consult/video/"+apmt_id.current)
+//     },
+//     prefill: {
+//         name: apmt_details.current.p_name,
+//         email: "",
+//         contact: apmt_details.current.p_mobile,
+//     },
+//     };
+//   const paymentObject = new window.Razorpay(options);
+//   paymentObject.open();
+// }
+
+const displayRazorPay = () =>{
+  navigate("/consult/video/"+apmt_id.current);
+}
+
+function payment() {
+    axios.post("/consult/payment/"+apmt_id.current)
+    .then((response) => {
+        console.log(response.data)
+        apmt_details.current = response.data.data;
+        displayRazorPay();
+    })
+}
 
   function findCurrentLocation() {
     if (navigator.geolocation) {
@@ -43,27 +94,39 @@ function Search() {
     }
   }
 
-  function startConsult(doc_id) {
-    setSelectedDoc(doc_id);
-    console.log(apmtDetails, "hi");
-    if (apmtDetails) {
-      axios
-        .post("/doctor/add/", {
-          apmt_id: apmtDetails._id,
-          doc_id,
-        })
-        .then((response) => {
-          const data = response.data;
+  function _updateAmptDetails() {
+    updateAmptDetails(apmt_id.current, {doc_id: doc_id.current})
+    .then((response) => {
+        console.log(response.data)
+        apmt_details.current = response.data.data
+        if (!apmt_details.current.p_name) {
+            navigate("/consult", { state : {apmt_id: apmt_id.current} })
+        }
+        else {
+            payment();
+        }
+    });
+  }
+
+  function startApmt(_doc_id) {  
+    doc_id.current = _doc_id;
+    console.log(apmt_details.current, "apmtdeta")
+    if (!apmt_details.current) {
+        startConsult().then((resp) => {
+          const data = resp.data;
           if (data.status === 1){
-            navigate("/consult/video/" + apmtDetails._id);
+            console.log("first90")
+            apmt_id.current = data.data._id;
+            apmt_details.current = data.data;
+            _updateAmptDetails()
           }
-          else{
-            alert(data.msg)
+          else {
+            navigate("/error", {state: {"message" : "Appointment can not start."}})
           }
-          
         });
-    } else {
-      navigate("/consult", { state: { doc_id } });
+    }
+    else {
+      _updateAmptDetails();
     }
   }
 
@@ -325,7 +388,7 @@ function Search() {
                       <DoctorsCard
                         item={item}
                         key={item.id}
-                        startConsult={startConsult}
+                        startApmt={startApmt}
                       />
                     );
                   })}

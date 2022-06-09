@@ -28,7 +28,7 @@ function DoctorProfile() {
         const resp = response.data;
         console.log(resp);
         if (resp.status === -1){
-            navigate("error", {state: {"msg" : resp.msg}})
+            navigate("/error", {state: {"msg" : resp.msg}})
         }
         else{
           setDocDetail(resp.data);

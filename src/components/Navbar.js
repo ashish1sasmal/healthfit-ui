@@ -6,7 +6,6 @@ import { AppContext } from "../context.js";
 function Navbar() {
   let { user } = useContext(AppContext);
   const navigate = useNavigate();
-  console.log(user);
   const logout = () => {
     localStorage.removeItem("user");
     navigate("/");

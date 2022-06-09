@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 function DoctorsCard(props) {
   const {
     item: { _id, name, main_specialization, clinic_details, yoe },
-    startConsult = null,
+    startApmt = null,
   } = props;
 
   const [show, setShow] = useState(false);
@@ -14,7 +14,7 @@ function DoctorsCard(props) {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    document.getElementById("consult-btn").disabled = !startConsult;
+    document.getElementById("consult-btn").disabled = !startApmt;
   }, []);
 
   return (
@@ -73,7 +73,7 @@ function DoctorsCard(props) {
                 <button
                   id="consult-btn"
                   className="btn btn-primary full-btn"
-                  onClick={() => startConsult(_id)}
+                  onClick={() => startApmt(_id)}
                 >
                   Video Consultation
                 </button>

@@ -192,22 +192,22 @@ function ConsultRoom() {
   };
 
   useEffect(() => {
-    request
+    console.log(params, params.apmtId, "apmt")
+    axios
       .get("/consult/get/" + params.apmtId)
       .then((response) => {
         const data = response.data;
-        // if (data.status === 1) {
-        if (data.status === -1) {
-          // if (data.data.completed) {
-          if (false) {
+        console.log(data, data.status)
+        if (data.status === 1) {
+          if (data.data.completed) {
             navigate("/error", {state: {"message" : "Consultation session already ended. "}})
           }
           setApmtDetails(data.data);
           console.log(window.location)
           var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-          console.log(ws_scheme + "://ashish202major.herokuapp.com/ws/chat/asdasd/");
+          console.log(ws_scheme + "://localhost:8000/ws/chat/asdasd/");
           setChatSocket(
-            new WebSocket(ws_scheme + "://ashish202major.herokuapp.com/ws/chat/asdasd/")
+            new WebSocket(ws_scheme + "://localhost:8000/ws/chat/asdasd/")
           );
           console.log("Websocket connected");
         } else if (data.status === 403) {
