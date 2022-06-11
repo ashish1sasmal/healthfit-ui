@@ -4,6 +4,8 @@ import React, { Component, useEffect, useRef, useState } from "react";
 import DoctorsCard from "./DoctorsCard";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { getAmptDetails, startConsult, updateAmptDetails } from "../utils/consultUtils";
+import Select from 'react-select';
+
 
 function Search() {
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ function Search() {
   const [isNear, setIsNear] = useState(false);
   const [coordinates, setCoordinates] = useState(null);
   const [docDetails, setDocDetails] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [dropValues,setDropValues] = useState([]);
   const doc_id = useRef(null);
   const [filters, setFilters] = useState({
     available: false,
@@ -176,6 +180,33 @@ function payment() {
       });
   };
 
+  const aquaticCreatures = [
+    { label: 'Shark', value: 'Shark' },
+    { label: 'Dolphin', value: 'Dolphin' },
+    { label: 'Whale', value: 'Whale' },
+    { label: 'Octopus', value: 'Octopus' },
+    { label: 'Crab', value: 'Crab' },
+    { label: 'Lobster', value: 'Lobster' },
+  ];
+
+  const searchByName = (e) => {
+    // setDropValues([]);
+      axios.get("/doctor/search/get?query="+e.target.value)
+      .then((response) => {
+          console.log(response.data.data);
+          let d = [];
+          response.data.data.map((item) => {
+              d.push({label: item.name, value: item._id})
+          })
+          setDropValues(d);
+      })
+  }
+
+  const fetchDoctorsByName = (e) => {
+    setFilters({...filters, doc_name: e.label});
+  }
+  
+
   return (
 <div class="container">
 <h1 class="my-4">
@@ -184,9 +215,21 @@ function payment() {
 
 <div class="row">
     <div class="col-lg-4 mb-4">
-    <div class="bg-white p-5 rounded shadow">
+    <div class="bg-white p-4 rounded shadow">
         <form action="" id="searchForm" onSubmit={handleSubmit}>
           <div className="row">
+            <div className="col-md-12">
+            <div class="p-1 bg-light rounded rounded-pill shadow mb-4">
+            Search By name
+              <Select
+                options={dropValues}
+                onKeyDown={searchByName}
+                onChange={fetchDoctorsByName}
+              />
+            </div>
+              
+            </div>
+
             <div className="col-md-12">
               Search Location
               <div class="p-1 bg-light rounded rounded-pill shadow mb-4">

@@ -748,3 +748,7 @@ textarea:focus {
 input .largeCheckbox {
     transform: scale(1.5);
 }
+
+.media-comment {
+    margin-top:20px
+}

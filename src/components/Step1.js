@@ -100,10 +100,15 @@ function Step1() {
             axios
             .post("/consult/start/")
             .then((response) => {
+              if (response.data.status === 1) {
                 const { _id } = response.data.data;
                 apmt_id.current = _id;
                 apmt_details.current = response.data.data;
                 updateAmptDetails();
+              }
+              else if (response.data.status === 403) {
+                navigate("/error", {state: {"message" : response.data.msg}})
+              }
             })
           }
           else {

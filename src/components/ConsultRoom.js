@@ -42,6 +42,8 @@ function ConsultRoom() {
   const videoOn = useRef(true);
   const audioOn = useRef(true);
   const [chats, addChats] = useState([]);
+  const [chatValue, setChatValue] = useState("");
+  const [chatFile, setChatFile] = useState("");
   const [apmtDetails, setApmtDetails] = useState(null);
   const [showChat, setShowChat] = useState(false);
   const [roomDetails, setRoomDetails] = useState({});
@@ -78,20 +80,23 @@ function ConsultRoom() {
     await createAndSendOffer();
   };
 
+ 
+
   const wrapConsult = () => {
-    if (apmtDetails) {
-      axios
-      .post("/consult/save/" + apmtDetails._id, {
-        ...roomDetails,
-      })
-      .then((response) => {
-        if (response.data.status === 1) {
-          window.location = "/";
-        } else {
-          alert("Something went wrong");
-        }
-      });
-    }
+      if (apmtDetails) {
+        axios
+        .post("/consult/save/" + apmtDetails._id, {
+          ...roomDetails,
+        })
+        .then((response) => {
+          console.log(response.data)
+          if (response.data.status === 1) {
+            window.location = "/";
+          } else {
+            alert("Something went wrong");
+          }
+        });
+      }
   };
 
   const endCall = (endByUser = true) => {
@@ -355,6 +360,40 @@ function ConsultRoom() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const uploadFile = () => {
+    let formData = new FormData();
+    let imagefile = document.getElementById("chat-file").files[0];
+    formData.append("my_file", imagefile);
+    return axios.post('/consult/upload/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+  })
+}
+
+const sendMessage = () => {
+  if (chatFile!=="") {
+      uploadFile()
+      .then((response) => {
+        sendSocket({
+          msg: response.data.filename,
+          type: "chat",
+          msg_type: "file",
+          link: response.data.link
+        })
+      });
+      setChatFile("");
+  }
+  else {
+    sendSocket({
+      msg: document.getElementById("chat-msg").value,
+      type: "chat",
+      msg_type: "text"
+    })
+    setChatValue("");
+  }
+}
+
   return (
     <>
       <Modal
@@ -365,7 +404,7 @@ function ConsultRoom() {
       >
         <form>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Feedback Form</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="row border-bottom p-2">
@@ -459,7 +498,7 @@ function ConsultRoom() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="submit" variant="primary" onClick={wrapConsult}>
+            <Button type="button" variant="primary" onClick={wrapConsult}>
               Submit
             </Button>
           </Modal.Footer>
@@ -551,29 +590,45 @@ function ConsultRoom() {
                   >
                     {chats &&
                       chats.map((item, idx) => {
-                        return (
-                          <p>
-                            <b>{item.from.full_name} : </b>
-                            {item.message}
-                          </p>
-                        );
+                        if (item.link) {
+                          return (
+                            <p>
+                              <b>{item.from.full_name} : </b>
+                              <a href={item.link} target="_blank">{item.message}</a>
+                            </p>
+                          );
+                        }
+                        else {
+                          return (
+                            <p>
+                              <b>{item.from.full_name} : </b>
+                              {item.message}
+                            </p>
+                          );
+                        }
                       })}
                   </div>
 
                   <div>
-                    <textarea id="chat-msg"></textarea>
+                    <textarea id="chat-msg" value={chatValue} onChange={(e) => setChatValue(e.target.value)} placeholder="Please enter message..."></textarea>
                     <br></br>
-                    <button
+                    { (chatValue !== "" || chatFile !== "") 
+                   ? (<button
                       className="btn btn-sm btn-primary"
-                      onClick={() =>
-                        sendSocket({
-                          msg: document.getElementById("chat-msg").value,
-                          type: "chat",
-                        })
-                      }
+                      onClick={sendMessage}
+                    >
+                      Send
+                    </button> )
+                    :
+                    (
+                      <button
+                      className="btn btn-sm btn-primary"
+                      disabled
                     >
                       Send
                     </button>
+                    )}
+                    <input className="ms-2" id="chat-file" type={"file"} value={chatFile} onChange={(e) => setChatFile(e.target.value)}></input>
                   </div>
                 </div>
               </div>
