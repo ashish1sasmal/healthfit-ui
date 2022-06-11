@@ -24,11 +24,11 @@ function Signup() {
       };
       axios.post("/users/signup/", data).then((resp) => {
         const data = resp.data;
-        console.log(data);
         if (data.status === 1) {
           navigate("/users/login");
-        } else {
-          alert(data.msg);
+        }
+        else {
+          navigate("/error", {state: {"message" : data.msg}})
         }
       });
     }

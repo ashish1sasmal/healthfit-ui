@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 function DoctorsCard(props) {
   const {
     item: { _id, name, main_specialization, clinic_details, yoe },
     startApmt = null,
   } = props;
+
+  const navigate = useNavigate();
 
   const [show1, setShow1] = useState(false);
 
@@ -32,6 +34,9 @@ function DoctorsCard(props) {
           if (data.status === 1) {
               setReviews(data.data);
               setShow1(true);
+          }
+          else if (response.data.status === -1) {
+            navigate("/error", {state: {"message" : response.data.msg}})
           }
       })
   }

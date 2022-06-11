@@ -19,11 +19,14 @@ function Home4() {
       }
       if (user) {
         axios.get("/consult/get/all?user_id="+user._id)
-      .then((response) => {
-          if (response.data.status === 1){
-              setAllConsult(response.data.data)
-              console.log(response.data.data)
-          }
+        .then((response) => {
+            if (response.data.status === 1){
+                setAllConsult(response.data.data)
+                console.log(response.data.data)
+            }
+            else {
+              navigate("/error", {state: {"message" : response.data.msg}})
+            }
       })
       }
       

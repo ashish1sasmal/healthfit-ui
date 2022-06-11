@@ -92,7 +92,11 @@ function ConsultRoom() {
           console.log(response.data)
           if (response.data.status === 1) {
             window.location = "/";
-          } else {
+          }
+          else if (response.data.status === -1) {
+            navigate("/error", {state: {"message" : response.data.msg}})
+          }
+          else {
             alert("Something went wrong");
           }
         });
@@ -209,13 +213,17 @@ function ConsultRoom() {
           }
           setApmtDetails(data.data);
           console.log(window.location)
-          var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+          var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
           console.log(ws_scheme + "://localhost:8000/ws/chat/asdasd/");
           setChatSocket(
             new WebSocket(ws_scheme + "://localhost:8000/ws/chat/asdasd/")
           );
           console.log("Websocket connected");
-        } else if (data.status === 403) {
+        }
+        else if (response.data.status === -1) {
+          navigate("/error", {state: {"message" : response.data.msg}})
+        }
+        else if (data.status === 403) {
           navigate("/error", { state: { message: data.msg } });
         } else {
           navigate("/error", { state: { message: "Appointment Not Found." } });
@@ -375,12 +383,17 @@ const sendMessage = () => {
   if (chatFile!=="") {
       uploadFile()
       .then((response) => {
-        sendSocket({
-          msg: response.data.filename,
-          type: "chat",
-          msg_type: "file",
-          link: response.data.link
-        })
+        if (response.data.status === 1) {
+          sendSocket({
+            msg: response.data.filename,
+            type: "chat",
+            msg_type: "file",
+            link: response.data.link
+          })
+        }
+        else {
+          navigate("/error", {state: {"message" : response.data.msg}})
+        }
       });
       setChatFile("");
   }

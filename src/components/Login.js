@@ -17,14 +17,15 @@ function Login() {
       .then((resp) => {
         const data = resp.data;
         console.log(data);
-        if (data.status == 1) {
+        if (data.status === 1) {
           if (details.save_password) {
             localStorage.setItem("user", JSON.stringify(data.user));
           }
           window.location = "/";
           navigate("/");
-        } else {
-          alert(data.msg);
+        } 
+        else {
+          navigate("/error", {state: {"message" : resp.data.msg}})
         }
       });
   };
