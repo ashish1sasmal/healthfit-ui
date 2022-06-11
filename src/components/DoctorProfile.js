@@ -47,7 +47,7 @@ function DoctorProfile() {
   return (
     docDetail && (
       <div
-        className="container"
+        className="container mt-4"
         style={{
           backgroundColor: "white",
           padding: "10px",
