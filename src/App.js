@@ -44,11 +44,6 @@ function App() {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
   });
 
-
-  
-
-  
-
   return (
     <div className="App">
       <AppContext.Provider value={{user}}>

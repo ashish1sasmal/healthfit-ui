@@ -5,8 +5,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 
 function DoctorsCard(props) {
   const {
-    item: { _id, name, main_specialization, clinic_details, yoe },
-    startApmt = null,
+    item: { _id, name, main_specialization, clinic_details, yoe, active=false },
+    startApmt = null
   } = props;
 
   const navigate = useNavigate();
@@ -48,7 +48,11 @@ function DoctorsCard(props) {
           <Modal.Title>Location on Google Maps</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.729056063562!2d77.10722881540845!3d28.697750482392017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d03e360813367%3A0x9cbff34c9c86e40b!2sJaipur%20Golden%20Hospital!5e0!3m2!1sen!2sin!4v1654959035303!5m2!1sen!2sin" width="770" height="450" style={{"border":"0"}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          { (clinic_details.map
+            ? 
+            <span dangerouslySetInnerHTML={{__html: clinic_details.map}}></span>
+            : <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.729056063562!2d77.10722881540845!3d28.697750482392017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d03e360813367%3A0x9cbff34c9c86e40b!2sJaipur%20Golden%20Hospital!5e0!3m2!1sen!2sin!4v1654959035303!5m2!1sen!2sin" width="770" height="450" style={{"border":"0"}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> )
+          }
         </Modal.Body>
       </Modal>
 
@@ -134,9 +138,16 @@ function DoctorsCard(props) {
                 </div>
               </div>
               <div className="col-md-4 m-2 mt-4">
-                <p style={{ textAlign: "center" }}>
-                  <i class="fa-solid fa-calendar-days"></i> Available Today
+                {active}
+                { active 
+                ?  <p style={{ textAlign: "center" }}>
+                <i class="fa-solid fa-circle-check" style={{"color" : "#14e34b"}}></i> Available Now
                 </p>
+                :  <p style={{ textAlign: "center" }}>
+                <i class="fa-solid fa-circle-xmark" style={{"color" : "#e81c30"}}></i> Not Avialable
+                </p>
+                }
+               
                 <button
                   id="consult-btn"
                   className="btn btn-primary full-btn"
@@ -159,12 +170,8 @@ function DoctorsCard(props) {
               <button type="button" class="btn  btn-sm btn-success">
                 <i class="fa-solid fa-thumbs-up"></i> 100%
               </button>
-              {}
-              <button type="button" class="btn btn-sm btn-outline-primary ms-1">
-                Online
-              </button>
-              <a style={{ marginLeft: "10px" }} role={'button'}  onClick={getReviews}>
-                Patient Stories
+              <a style={{ marginLeft: "10px", "color" : "blue" }} role={'button'}  onClick={getReviews}>
+              <i class="fa-solid fa-comment-medical"></i> Patient Stories
               </a>
             </div>
           </div>

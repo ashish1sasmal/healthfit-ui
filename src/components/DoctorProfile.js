@@ -20,7 +20,7 @@ function DoctorProfile() {
       user = JSON.parse(localStorage.getItem("user"));
     }
     if (!user) {
-        window.location ='users/login'
+        window.location ='/users/login'
     }
     axios
       .get("/doctor/" + params.docId+"/")

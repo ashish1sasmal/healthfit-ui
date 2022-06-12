@@ -9,13 +9,17 @@ function Step1() {
     const { state } = useLocation();
     const apmt_id = useRef(state?.apmt_id);
     const apmt_details = useRef(null);
-    let { user } = useContext(AppContext)
+    let x = useContext(AppContext).user;
+    const [user, setUser] = useState(x);
     const [specs, setSpecs] = useState([]);
     const [details, setDetails] = useState(null || {symptoms: "fever", spec: "Physical Therapist", p_name: "Test user", p_mobile: "1234"});
 
     useEffect(() => {
       if (!user){
-        user = JSON.parse(localStorage.getItem("user"));
+          setUser(JSON.parse(localStorage.getItem("user")));
+          if (!user) {
+              navigate("/users/login");
+          }
       }
       if (apmt_id.current) {
           getAmptDetails(apmt_id.current)

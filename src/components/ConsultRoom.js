@@ -29,7 +29,8 @@ function ConsultRoom() {
   };
   const params = useParams();
   const navigate = useNavigate();
-  let { user } = useContext(AppContext);
+  let x = useContext(AppContext).user;
+  const [user, setUser] = useState(x);
   const [chatSocket, setChatSocket] = useState(null);
   const [mediaConstraints, setMediaConstraints] = useState({
     video: true,
@@ -51,6 +52,12 @@ function ConsultRoom() {
   // Stopwatch
   const [timer, setTimer] = useState(0);
   useEffect(() => {
+    if (!user){
+      setUser(JSON.parse(localStorage.getItem("user")));
+      if (!user) {
+          navigate("/users/login");
+      }
+  }
     setInterval(() => {
       setTimer((timer) => timer + 1);
     }, 1000);
@@ -201,7 +208,12 @@ function ConsultRoom() {
   };
 
   useEffect(() => {
-    console.log(params, params.apmtId, "apmt")
+    if (!user){
+      setUser(JSON.parse(localStorage.getItem("user")));
+      if (!user) {
+          navigate("/users/login");
+      }
+  }
     axios
       .get("/consult/get/" + params.apmtId)
       .then((response) => {
