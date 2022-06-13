@@ -153,7 +153,7 @@ function Step1() {
             
         </div>
         <div className='col-5'>
-        <img className='border' style={{"width" : "400px", "margin-left": "50px", "marginTop" : "40px"}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzbU4a4k2ZjhsePk5be_vfwWudHVjHrSDZQlMARsIhUtygc_D-lOp8cFNJbCLQvbCv7n0&usqp=CAU"/>
+        <img style={{"width" : "400px", "margin-left": "50px", "marginTop" : "40px", "border": "1px solid black"}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzbU4a4k2ZjhsePk5be_vfwWudHVjHrSDZQlMARsIhUtygc_D-lOp8cFNJbCLQvbCv7n0&usqp=CAU"/>
         </div>
     </div>
 </div>

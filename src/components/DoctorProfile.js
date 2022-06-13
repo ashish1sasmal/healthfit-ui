@@ -60,12 +60,6 @@ function DoctorProfile() {
 
         {user && docDetail.user === user._id && 
           <div className="ms-5 row">
-          <div className="col-md-3">
-            <label class="switch">
-                <input type="checkbox" checked={docDetail.online} onClick={() => updateStatus(!docDetail.online, docDetail.active)} ></input>
-                <span class="slider"></span>
-            </label> Online
-          </div>
 
           <div className="col-md-3">
             <label class="switch">
@@ -91,7 +85,7 @@ function DoctorProfile() {
               <div className="col-6 col-lg-3">
                   <div className="count-data text-center">
                     <h1 className="count h2" data-to="850" data-speed="850">
-                      9+ Yrs
+                      {docDetail.yoe}+ Yrs
                     </h1>
                     <p className="m-0px font-w-600">Experience</p>
                   </div>
@@ -359,51 +353,6 @@ function DoctorProfile() {
                             1355 Market Street, Suite 900
                             <br />
                             San Francisco, CA 94103
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table className="table table-profile">
-                      <thead>
-                        <tr>
-                          <th colspan="2">BASIC INFORMATION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="field">Birth of Date</td>
-                          <td className="value">
-                            November 4, 1989
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="field">Gender</td>
-                          <td className="value">
-                            Male
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="field">Facebook</td>
-                          <td className="value">
-                            http://facebook.com/infinite.admin
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="field">Website</td>
-                          <td className="value">
-                            http://seantheme.com
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
                           </td>
                         </tr>
                       </tbody>

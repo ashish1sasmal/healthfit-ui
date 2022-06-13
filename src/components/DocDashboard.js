@@ -6,6 +6,7 @@ import request from "../utils/makeRequest";
 function DocDashboard() {
   let { user } = useContext(AppContext);
   const [consult, setConsult] = useState([]);
+  const [details, setDetails] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function DocDashboard() {
       if (response.data.status === 1) {
         console.log(response.data);
         setConsult(response.data.consult);
+        setDetails(response.data);
       } else if (response.data.status === 403) {
         navigate("/error", { state: { msg: response.data.msg } });
       }
@@ -38,8 +40,8 @@ function DocDashboard() {
           >
             <div class="card-header">Overall Rating</div>
             <div class="card-body">
-              <h1 class="card-title fw-bolder">8.5 / 10</h1>
-              <h5>Rating given by : 25 Users</h5>
+              <h1 class="card-title fw-bolder">{details.overall_rating} / 10</h1>
+              <h5>Rating given by : {details.all_ratings} Users</h5>
             </div>
           </div>
         </div>
@@ -51,7 +53,7 @@ function DocDashboard() {
           >
             <div class="card-header">Total Consultations</div>
             <div class="card-body">
-              <h1 class="card-title fw-bolder">42</h1>
+              <h1 class="card-title fw-bolder">{details.all_consult}</h1>
               <h5>Active Since : 25 Jan 2021</h5>
             </div>
           </div>
@@ -64,8 +66,8 @@ function DocDashboard() {
           >
             <div class="card-header">Positive Reviews</div>
             <div class="card-body">
-              <h1 class="card-title fw-bolder">72%</h1>
-              <h5>Positive reviews given by : 20 Users</h5>
+              <h1 class="card-title fw-bolder">{details.positive_reviews_perc}%</h1>
+              <h5>Positive reviews given by : {details.positive_reviews} Users</h5>
             </div>
           </div>
         </div>
