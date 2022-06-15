@@ -49,38 +49,38 @@ function Search() {
     });
   }, []);
 
-  const displayRazorPay = () => {
-    const options = {
-    key: 'rzp_test_eCu1qUcpkGwpvc',
-    currency: 'INR',
-    amount: 50000,
-    name: apmt_details.current.p_name,
-    description: "Wallet Transaction",
-    image: "",
-    order_id: apmt_details.current.razorpay_order_id,
-    handler: async function (resp) {
-        console.log(resp);
-        const data = {
-            orderCreationId: resp._id,
-            razorpayPaymentId: resp.razorpay_payment_id,
-            razorpayOrderId: resp.razorpay_order_id,
-            razorpaySignature: resp.razorpay_signature,
-        };
-        navigate("/consult/video/"+apmt_id.current)
-    },
-    prefill: {
-        name: apmt_details.current.p_name,
-        email: "",
-        contact: apmt_details.current.p_mobile,
-    },
-    };
-  const paymentObject = new window.Razorpay(options);
-  paymentObject.open();
-}
-
-// const displayRazorPay = () =>{
-//   navigate("/consult/video/"+apmt_id.current);
+//   const displayRazorPay = () => {
+//     const options = {
+//     key: 'rzp_test_eCu1qUcpkGwpvc',
+//     currency: 'INR',
+//     amount: 50000,
+//     name: apmt_details.current.p_name,
+//     description: "Wallet Transaction",
+//     image: "",
+//     order_id: apmt_details.current.razorpay_order_id,
+//     handler: async function (resp) {
+//         console.log(resp);
+//         const data = {
+//             orderCreationId: resp._id,
+//             razorpayPaymentId: resp.razorpay_payment_id,
+//             razorpayOrderId: resp.razorpay_order_id,
+//             razorpaySignature: resp.razorpay_signature,
+//         };
+//         navigate("/consult/video/"+apmt_id.current)
+//     },
+//     prefill: {
+//         name: apmt_details.current.p_name,
+//         email: "",
+//         contact: apmt_details.current.p_mobile,
+//     },
+//     };
+//   const paymentObject = new window.Razorpay(options);
+//   paymentObject.open();
 // }
+
+const displayRazorPay = () =>{
+  navigate("/consult/video/"+apmt_id.current);
+}
 
 function payment() {
     axios.post("/consult/payment/"+apmt_id.current)
