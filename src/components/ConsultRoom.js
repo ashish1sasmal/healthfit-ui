@@ -30,7 +30,7 @@ function ConsultRoom() {
   const params = useParams();
   const navigate = useNavigate();
   let x = useContext(AppContext).user;
-  const [user, setUser] = useState(x);
+  const user = useRef(x);
   const [chatSocket, setChatSocket] = useState(null);
   const [mediaConstraints, setMediaConstraints] = useState({
     video: true,
@@ -52,9 +52,9 @@ function ConsultRoom() {
   // Stopwatch
   const [timer, setTimer] = useState(0);
   useEffect(() => {
-    if (!user){
-      setUser(JSON.parse(localStorage.getItem("user")));
-      if (!user) {
+    if (!user.current){
+      user.current = JSON.parse(localStorage.getItem("user"));
+      if (!user.current) {
           navigate("/users/login");
       }
   }
@@ -117,7 +117,7 @@ function ConsultRoom() {
         msg: "",
       });
     }
-    if (user.type === "doctor") {
+    if (user.current.type === "doctor") {
       wrapConsult();
     } else {
       setShow(true);
@@ -196,7 +196,7 @@ function ConsultRoom() {
 
   const sendSocket = (data) => {
     if (chatSocket) {
-      data.from = user;
+      data.from = user.current;
       chatSocket.send(JSON.stringify(data));
     } else {
       console.log("Chat socket not connected");
@@ -204,16 +204,16 @@ function ConsultRoom() {
   };
 
   const accessMedia = () => {
-    return navigator.mediaDevices.getUserMedia(mediaConstraints);
+    console.log(navigator.mediaDevices)
+    if (navigator.mediaDevices) {
+      return navigator.mediaDevices.getUserMedia(mediaConstraints);
+    }
+    else {
+      alert("Does not have camera permission!")
+    }
   };
 
   useEffect(() => {
-    if (!user){
-      setUser(JSON.parse(localStorage.getItem("user")));
-      if (!user) {
-          navigate("/users/login");
-      }
-  }
     axios
       .get("/consult/get/" + params.apmtId)
       .then((response) => {
@@ -225,10 +225,11 @@ function ConsultRoom() {
           }
           setApmtDetails(data.data);
           console.log(window.location)
-          var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
-          console.log(ws_scheme + "://localhost:8000/ws/chat/asdasd/");
+          // var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
+          var ws_scheme = "wss";
+          console.log(ws_scheme + "://ashish202cse-api.herokuapp.com/ws/chat/asdasd/");
           setChatSocket(
-            new WebSocket(ws_scheme + "://localhost:8000/ws/chat/asdasd/")
+            new WebSocket(ws_scheme + "://ashish202cse-api.herokuapp.com/ws/chat/asdasd/")
           );
           console.log("Websocket connected");
         }
@@ -329,7 +330,7 @@ function ConsultRoom() {
     }
   };
 
-  if (chatSocket && user) {
+  if (chatSocket && user.current) {
     chatSocket.onmessage = async (e) => {
       const data = JSON.parse(e.data);
       console.log(data);
@@ -338,7 +339,7 @@ function ConsultRoom() {
       const msg = data.message;
       if (type === "chat") {
         addChats([...chats, data]);
-      } else if (from._id !== user._id) {
+      } else if (from._id !== user.current._id) {
         if (type === "joiner") {
           await call();
         } else if (type === "offer") {
