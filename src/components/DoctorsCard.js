@@ -72,29 +72,14 @@ function DoctorsCard(props) {
               <div class="col-md-12">
                 { reviews.map((item) => {
                     return (<div class="media media-comment p-2" style={{"backgroundColor" : "white"}}>
-                    <img class="d-flex rounded-circle m-3" style={{width: "40px"}} src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description"/>
+                    <img class="d-flex rounded-circle m-3" style={{width: "40px"}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbvaBdtJ4GaN7m79jU-Y47NqT3Grvxd7qIZ9VKUZKyU1ynYKxoNdlQCixTRDnliBE62os&usqp=CAU" alt="Image Description"/>
                     <div class="media-body u-shadow-v18">
                       <div >
                         <h5 class="h5 mb-0">{item.user_name}</h5>
-                        <span>5 days ago</span>
                       </div>
                 
                       <p>{item.review}</p>
                 
-                      <ul class="list-inline d-sm-flex my-0">
-                        <li class="list-inline-item">
-                          <a class="u-link-v5" href="#!">
-                            <i class="fa fa-thumbs-up"></i>
-                            178
-                          </a>
-                        </li>
-                        <li class="list-inline-item">
-                          <a class="u-link-v5" href="#!">
-                            <i class="fa fa-thumbs-down"></i>
-                            34
-                          </a>
-                        </li>
-                      </ul>
                     </div>
                           </div>);
                 }) }

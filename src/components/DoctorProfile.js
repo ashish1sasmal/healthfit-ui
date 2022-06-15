@@ -258,7 +258,7 @@ function DoctorProfile() {
                                   Edit
                                 </a>
                                 <br />
-                                <span className="text-muted">PHP Programmer</span>
+                                <span className="text-muted">Junior Doctor</span>
                               </div>)
                             })
                             }
@@ -275,7 +275,7 @@ function DoctorProfile() {
                                   Edit
                                 </a>
                                 <br />
-                                <span className="text-muted">PHP Programmer</span>
+                                <span className="text-muted">MBBS degree</span>
                               </div>)
                             })
                             }
@@ -318,7 +318,7 @@ function DoctorProfile() {
                         <tr>
                           <td className="field">Email</td>
                           <td className="value">
-                            admin@infinite.com
+                            {docDetail.email}
                             <a href="#" className="m-l-10">
                               Edit
                             </a>
@@ -327,7 +327,7 @@ function DoctorProfile() {
                         <tr>
                           <td className="field">Facebook</td>
                           <td className="value">
-                            http://facebook.com/infinite.admin
+                            http://facebook.com/
                             <a href="#" className="m-l-10">
                               Edit
                             </a>
@@ -336,7 +336,7 @@ function DoctorProfile() {
                         <tr>
                           <td className="field">Website</td>
                           <td className="value">
-                            http://seantheme.com
+                            http://example.com
                             <a href="#" className="m-l-10">
                               Edit
                             </a>
@@ -345,14 +345,9 @@ function DoctorProfile() {
                         <tr>
                           <td className="field">Address</td>
                           <td className="value">
-                            Twitter, Inc.{" "}
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
+                            MG Road, House B-9
                             <br />
-                            1355 Market Street, Suite 900
-                            <br />
-                            San Francisco, CA 94103
+                            Rohini,Delhi - 110086
                           </td>
                         </tr>
                       </tbody>

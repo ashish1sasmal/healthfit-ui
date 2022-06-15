@@ -225,8 +225,8 @@ function ConsultRoom() {
           }
           setApmtDetails(data.data);
           console.log(window.location)
-          // var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
-          var ws_scheme = "wss";
+          var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
+          // var ws_scheme = "wss";
           console.log(ws_scheme + "://ashish202cse-api.herokuapp.com/ws/chat/asdasd/");
           setChatSocket(
             new WebSocket(ws_scheme + "://ashish202cse-api.herokuapp.com/ws/chat/asdasd/")
@@ -539,7 +539,7 @@ const sendMessage = () => {
         <div class="row" style={{ minHeight: "70vh" }}>
           <div class="col-lg-8 mb-4">
             <div class="card shadow" style={{ minHeight: "50vh" }}>
-              <video id="remote" width="100%" autoPlay  muted controls></video>
+              <video id="remote" width="60%" autoPlay  muted controls></video>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#">{apmtDetails && apmtDetails.doctor.name}</a>

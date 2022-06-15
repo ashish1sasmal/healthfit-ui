@@ -283,25 +283,26 @@ function DocDashboard() {
                   <tr>
                     <th class="th-sm">Appointment Id</th>
                     <th class="th-sm">User</th>
-                    <th class="th-sm">Comment</th>
+                    <th class="th-sm" style={{"maxWidth" : "150px"}}>Comment</th>
                     <th class="th-sm">Date/ Time</th>
                     <th class="th-sm">Ratings</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  {details.ratings && details.ratings.map((item) => {
+                    return <tr>
                     <td>
-                      <NavLink to="/asdasd21">asdasd21</NavLink>
+                      <NavLink to="/asdasd21">{item._id}</NavLink>
                     </td>
-                    <td>System Architect</td>
-                    <td>
-                      Documentation and examples for opt-in styling of tables
-                      (given their prevalent use in JavaScript plugins) with
-                      Bootstrap.
+                    <td>{item.user_name}</td>
+                    <td style={{"maxWidth" : "650px"}}>
+                      {item.review}
                     </td>
-                    <td>12 Spet 2021</td>
-                    <td>8/10</td>
-                  </tr>
+                    <td>12 June 2022</td>
+                    <td>{item.rating}/10</td>
+                  </tr>;
+                  })}
+                  
                 </tbody>
               </table>
             </div>
