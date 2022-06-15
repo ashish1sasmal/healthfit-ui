@@ -213,61 +213,20 @@ function DocDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  { details.consults && details.consults.map((item) => {
+                    return <tr>
                     <td>
-                      <NavLink to="/asdasd21">asdasd21</NavLink>
+                      <NavLink to="/asdasd21">{item._id}</NavLink>
                     </td>
-                    <td>Shruti Sharma</td>
-                    <td>Body Pain & Stomach ache</td>
-                    <td>20 May 2022 11:10 AM</td>
+                    <td>{item.p_name}</td>
+                    <td>{item.symptoms}</td>
+                    <td>{item.start_time}</td>
                     <td>+91 9123456789</td>
                     <td>18 min</td>
-                    <td>XE2312</td>
+                    <td>{item.user}</td>
                   </tr>
-                  <tr>
-                    <td>
-                      <NavLink to="/asdasd21">asdasd21</NavLink>
-                    </td>
-                    <td>Payal Jain</td>
-                    <td>Difficulty in breathing & cold</td>
-                    <td>19 May 2022 7:30 PM</td>
-                    <td>+91 9123456789</td>
-                    <td>22 min</td>
-                    <td>HV7612</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <NavLink to="/asdasd21">asdasd21</NavLink>
-                    </td>
-                    <td>Ravi Verma</td>
-                    <td>Leg strain</td>
-                    <td>20 May 2022 3:10 PM</td>
-                    <td>+91 9123456789</td>
-                    <td>15 min</td>
-                    <td>AE2412</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <NavLink to="/asdasd21">asdasd21</NavLink>
-                    </td>
-                    <td>Shruti Sharma</td>
-                    <td>Body Pain & Stomach ache</td>
-                    <td>20 May 2022 11:10 AM</td>
-                    <td>+91 9123456789</td>
-                    <td>18 min</td>
-                    <td>XE2312</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <NavLink to="/asdasd21">asdasd21</NavLink>
-                    </td>
-                    <td>Shruti Sharma</td>
-                    <td>Body Pain & Stomach ache</td>
-                    <td>20 May 2022 11:10 AM</td>
-                    <td>+91 9123456789</td>
-                    <td>18 min</td>
-                    <td>XE2312</td>
-                  </tr>
+                  }) }
+                  
                 </tbody>
               </table>
             </div>

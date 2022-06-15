@@ -539,7 +539,7 @@ const sendMessage = () => {
         <div class="row" style={{ minHeight: "70vh" }}>
           <div class="col-lg-8 mb-4">
             <div class="card shadow" style={{ minHeight: "50vh" }}>
-              <video id="remote" width="60%" autoPlay  muted controls></video>
+              <video id="remote" width="60%" style={{"margin-left":"20%"}} autoPlay controls></video>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#">{apmtDetails && apmtDetails.doctor.name}</a>

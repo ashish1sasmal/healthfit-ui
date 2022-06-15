@@ -254,9 +254,6 @@ function DoctorProfile() {
                             docDetail.work_experience.map((item, idx) => {
                                 return (<div className="m-b-5">
                                 <b>{item}</b>{" "}
-                                <a href="#" className="m-l-10">
-                                  Edit
-                                </a>
                                 <br />
                                 <span className="text-muted">Junior Doctor</span>
                               </div>)
@@ -271,9 +268,6 @@ function DoctorProfile() {
                             docDetail.education.map((item, idx) => {
                                 return (<div className="m-b-5">
                                 <b>{item}</b>{" "}
-                                <a href="#" className="m-l-10">
-                                  Edit
-                                </a>
                                 <br />
                                 <span className="text-muted">MBBS degree</span>
                               </div>)
@@ -288,9 +282,6 @@ function DoctorProfile() {
                             docDetail.awards_recognitions.map((item, idx) => {
                                 return (<div className="m-b-5">
                                 <b>{item}</b>{" "}
-                                <a href="#" className="m-l-10">
-                                  Edit
-                                </a>
                                 <br />
                               </div>)
                             })
@@ -310,36 +301,24 @@ function DoctorProfile() {
                           <td className="field">Mobile Phones</td>
                           <td className="value">
                             +44 7700 900860
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
                           </td>
                         </tr>
                         <tr>
                           <td className="field">Email</td>
                           <td className="value">
                             {docDetail.email}
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
                           </td>
                         </tr>
                         <tr>
                           <td className="field">Facebook</td>
                           <td className="value">
                             http://facebook.com/
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
                           </td>
                         </tr>
                         <tr>
                           <td className="field">Website</td>
                           <td className="value">
                             http://example.com
-                            <a href="#" className="m-l-10">
-                              Edit
-                            </a>
                           </td>
                         </tr>
                         <tr>
