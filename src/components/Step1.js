@@ -12,7 +12,7 @@ function Step1() {
     let x = useContext(AppContext).user;
     const [user, setUser] = useState(x);
     const [specs, setSpecs] = useState([]);
-    const [details, setDetails] = useState(null || {symptoms: "", spec: "Physical Therapist", p_name: "", p_mobile: "1234567890"});
+    const [details, setDetails] = useState(null || {});
 
     useEffect(() => {
       if (!user){
